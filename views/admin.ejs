@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #111;
+            color: white;
+            padding: 40px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        select,
+        input {
+            background: #222;
+            color: white;
+            border: 1px solid #444;
+            padding: 6px;
+            border-radius: 4px;
+        }
+
+        button {
+            background: #e87d3a;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        h1,
+        h2 {
+            font-weight: 500;
+        }
+
+        form {
+            display: inline;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Kiosk Admin</h1>
+
+    <h2>Devices</h2>
+    <table>
+        <tr>
+            <th>Serial</th>
+            <th>Retailer</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        <% Object.entries(devices).forEach(([serial, d])=> { %>
+            <tr>
+                <td>
+                    <%= serial %>
+                </td>
+                <td>
+                    <form method="POST" action="/admin/devices/<%= serial %>" style="display:flex; gap:8px;">
+                        <select name="retailer_name">
+                            <% retailers.forEach(r=> { %>
+                                <option value="<%= r.name %>" <%=d.retailer_name===r.name ? 'selected' : '' %>><%=
+                                        r.name %>
+                                </option>
+                                <% }) %>
+                        </select>
+                        <button type="submit">Save</button>
+                    </form>
+                </td>
+                <td>
+                    <%= d.status %>
+                </td>
+                <td>
+                    <form method="POST" action="/admin/devices/<%= serial %>/delete">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
+    </table>
+
+    <h2>Retailers</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>URL</th>
+            <th></th>
+        </tr>
+        <% retailers.forEach(r=> { %>
+            <tr>
+                <form method="POST" action="/admin/retailers/<%= r.name %>/edit" style="display:table-row;">
+                    <td><input type="text" name="name" value="<%= r.name %>"></td>
+                    <td><input type="text" name="url" value="<%= r.url %>" style="width:300px;"></td>
+                    <td>
+                        <button type="submit">Save</button>
+                        <button type="submit" form="delete-<%= r.name %>">Delete</button>
+                    </td>
+                </form>
+            </tr>
+            <form id="delete-<%= r.name %>" method="POST" action="/admin/retailers/<%= r.name %>/delete"></form>
+            <% }) %>
+    </table>
+
+    <h2>Add Retailer</h2>
+    <form method="POST" action="/admin/retailers">
+        <input type="text" name="name" placeholder="Display name" required>
+        <input type="text" name="url" placeholder="https://..." style="width:300px;" required>
+        <button type="submit">Add</button>
+    </form>
+
+</body>
+
+</html>

@@ -1,6 +1,10 @@
-{
-    "Retailer-1": {
+[
+    {
         "name": "Example fires",
         "url": "https://www.example-fires.com"
+    },
+    {
+        "name": "example 2 fires",
+        "url": "https://www.example2-fires.com"
     }
-}
+]

@@ -45,18 +45,18 @@
     <p>Serial: <%= serial %>
     </p>
 
-    <% Object.entries(retailers).forEach(([id, r])=> { %>
-        <button onclick="register('<%= id %>')">
+    <% retailers.forEach(r=> { %>
+        <button onclick="register('<%= r.name %>')">
             <%= r.name %>
         </button>
         <% }) %>
 
             <script>
-                function register(retailerId) {
+                function register(retailerName) {
                     fetch('/register', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ serial: '<%= serial %>', retailer_id: retailerId })
+                        body: JSON.stringify({ serial: '<%= serial %>', retailer_name: retailerName })
                     }).then(() => window.location.href = '/registered');
                 }
             </script>
