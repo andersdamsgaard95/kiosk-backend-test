@@ -37,6 +37,20 @@
         button:active {
             background: #e87d3a;
         }
+
+        button:disabled {
+            opacity: 0.5;
+        }
+
+        #status {
+            color: #e87d3a;
+            font-family: monospace;
+            display: none;
+        }
+
+        #status.visible {
+            display: block;
+        }
     </style>
 </head>
 
@@ -51,13 +65,53 @@
         </button>
         <% }) %>
 
+            <p id="status"></p>
+
             <script>
+                const serial = '<%= serial %>';
+
+                function setStatus(text) {
+                    const el = document.getElementById('status');
+                    el.textContent = text;
+                    el.classList.add('visible');
+                }
+
+                function setButtonsDisabled(disabled) {
+                    document.querySelectorAll('button').forEach(b => b.disabled = disabled);
+                }
+
                 function register(retailerName) {
+                    setButtonsDisabled(true);
+                    setStatus('Registering...');
+
                     fetch('/register', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ serial: '<%= serial %>', retailer_name: retailerName })
-                    }).then(() => window.location.href = '/registered');
+                        body: JSON.stringify({ serial, retailer_name: retailerName })
+                    })
+                        .then(res => {
+                            if (!res.ok) throw new Error('registration failed');
+                            // Last step: load the assigned URL directly, right here on the
+                            // bench, instead of just confirming and asking for a reboot -
+                            // this doubles as the final visual check that the correct site
+                            // actually comes up before the unit ships.
+                            setStatus('Registered - loading assigned URL...');
+                            return fetch('/api/config/' + encodeURIComponent(serial));
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data && data.url) {
+                                window.location.href = data.url;
+                            } else {
+                                window.location.href = '/registered';
+                            }
+                        })
+                        .catch(() => {
+                            // Registration or the follow-up fetch failed - fall back to the
+                            // static confirmation page rather than leaving the tech stuck on
+                            // a page that looks broken.
+                            window.location.href = '/registered';
+                        });
                 }
             </script>
 </body>
