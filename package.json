@@ -17,5 +17,12 @@
   "bugs": {
     "url": "https://github.com/andersdamsgaard95/kiosk-backend-test/issues"
   },
-  "homepage": "https://github.com/andersdamsgaard95/kiosk-backend-test#readme"
+  "homepage": "https://github.com/andersdamsgaard95/kiosk-backend-test#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0"
+  }
 }
