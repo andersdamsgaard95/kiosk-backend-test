@@ -1,0 +1,21 @@
+{
+  "name": "escea-kiosk-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andersdamsgaard95/kiosk-backend-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andersdamsgaard95/kiosk-backend-test/issues"
+  },
+  "homepage": "https://github.com/andersdamsgaard95/kiosk-backend-test#readme"
+}
