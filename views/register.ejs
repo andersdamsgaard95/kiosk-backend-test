@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #111;
+            color: white;
+            margin: 0;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: #888;
+            margin-bottom: 30px;
+            font-family: monospace;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 24px;
+            margin-bottom: 12px;
+            font-size: 1.5rem;
+            background: #222;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 8px;
+        }
+
+        button:active {
+            background: #e87d3a;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Select Retailer</h1>
+    <p>Serial: <%= serial %>
+    </p>
+
+    <% Object.entries(retailers).forEach(([id, r])=> { %>
+        <button onclick="register('<%= id %>')">
+            <%= r.name %>
+        </button>
+        <% }) %>
+
+            <script>
+                function register(retailerId) {
+                    fetch('/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ serial: '<%= serial %>', retailer_id: retailerId })
+                    }).then(() => window.location.href = '/registered');
+                }
+            </script>
+</body>
+
+</html>

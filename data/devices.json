@@ -1,0 +1,10 @@
+{
+  "123": {
+    "retailer_id": "Retailer-1",
+    "status": "active"
+  },
+  "1234": {
+    "retailer_id": "Retailer-1",
+    "status": "active"
+  }
+}
