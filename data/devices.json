@@ -6,5 +6,9 @@
   "1234": {
     "retailer_name": "Stoke China",
     "status": "active"
+  },
+  "f5b998ad35fa575e": {
+    "retailer_name": "Stoke Auckland",
+    "status": "active"
   }
 }
