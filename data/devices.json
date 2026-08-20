@@ -1,10 +1,10 @@
 {
   "123": {
-    "retailer_name": "Example fires",
+    "retailer_name": "Stoke Auckland",
     "status": "active"
   },
   "1234": {
-    "retailer_name": "example 2 fires",
+    "retailer_name": "Stoke China",
     "status": "active"
   }
 }
